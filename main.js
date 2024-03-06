@@ -1,12 +1,24 @@
 function init() {
-    const parcThabor = {
+    const lille = {
         lat: 50.6329700,
-        lng: 3.0585800
+        lng: 3.0585800,
+        title: 'Ville de Lille',
+        draggable: true
     }
 
-    const zoomLevel = 7
+    const citadelleLille = {
+        lat: 50.6413572,
+        lng: 3.0443862,
+        title: 'Citadelle de Lille',
+        draggable: false
+    }
 
-    const map = L.map('mapid').setView([parcThabor.lat, parcThabor.lng], zoomLevel)
+    const zoomLevel = 12
+
+    const map = L.map('mapid').setView([lille.lat, lille.lng], zoomLevel)
+
+    addMarker(lille, map)
+    addMarker(citadelleLille, map)
 
     const mainLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -15,6 +27,11 @@ function init() {
 
     mainLayer.addTo(map)
 
+}
+
+function addMarker(options, map) {
+    const marker = L.marker([options.lat, options.lng], { title: options.title, draggable: options.draggable })
+    marker.addTo(map)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
