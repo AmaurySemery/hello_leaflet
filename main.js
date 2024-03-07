@@ -1,4 +1,12 @@
+let currLat = null
+let currLng = null
+
 function init() {
+    console.log('Inside init')
+    currLat = document.getElementById('currLat')
+    currLng = document.getElementById('currLng')
+
+
     const lille = {
         lat: 50.6329700,
         lng: 3.0585800,
@@ -38,7 +46,9 @@ function addMarker(options, map) {
     marker.addTo(map)
 
     marker.on('dragend', function(event) {
-        console.log('event', event)
+        console.log('New coords: ', event.target._latlng)
+        currLat.innerText = `lat: ${event.target._latlng.lat}`
+        currLng.innerText = `lng: ${event.target._latlng.lng}`
     })
 }
 
