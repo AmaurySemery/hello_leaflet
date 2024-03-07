@@ -47,9 +47,13 @@ function addMarker(options, map) {
 
     marker.on('dragend', function(event) {
         console.log('New coords: ', event.target._latlng)
-        currLat.innerText = `lat: ${event.target._latlng.lat}`
-        currLng.innerText = `lng: ${event.target._latlng.lng}`
+        showNewCoords(event.target._latlng, event.target)
     })
+}
+
+function showNewCoords(coords, marker) {
+    currLat.innerText = `lat: ${coords.lat}`
+    currLng.innerText = `lng: ${coords.lng}`
 }
 
 document.addEventListener('DOMContentLoaded', function() {
