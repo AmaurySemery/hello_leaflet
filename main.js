@@ -36,6 +36,10 @@ function init() {
 function addMarker(options, map) {
     const marker = L.marker([options.lat, options.lng], { title: options.title, draggable: options.draggable })
     marker.addTo(map)
+
+    marker.on('dragend', function(event) {
+        console.log('event', event)
+    })
 }
 
 document.addEventListener('DOMContentLoaded', function() {
