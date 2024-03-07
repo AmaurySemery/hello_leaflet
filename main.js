@@ -54,6 +54,9 @@ function addMarker(options, map) {
 function showNewCoords(coords, marker) {
     currLat.innerText = `lat: ${coords.lat}`
     currLng.innerText = `lng: ${coords.lng}`
+    marker
+        .bindPopup(`<h3>Nouvelles coordonnées:</h3> <div>lat: ${coords.lat} | lng: ${coords.lng}</div>`)
+        .openPopup()
 }
 
 document.addEventListener('DOMContentLoaded', function() {
