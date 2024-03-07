@@ -20,12 +20,14 @@ function init() {
     addMarker(lille, map)
     addMarker(citadelleLille, map)
 
-    const mainLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    })
+    // const mainLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 19,
+    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    // })
 
-    mainLayer.addTo(map)
+    // mainLayer.addTo(map)
+
+    L.esri.basemapLayer('Topographic').addTo(map);
 
 }
 
