@@ -27,7 +27,8 @@ function init() {
 
     // mainLayer.addTo(map)
 
-    L.esri.basemapLayer('Topographic').addTo(map);
+    // L.esri.basemapLayer('Topographic').addTo(map);
+    L.esri.basemapLayer('ImageryFirefly').addTo(map);
 
 }
 
