@@ -2,13 +2,18 @@ let currLat = null
 let currLng = null
 let circleRange = null
 let circle = null
+let btnFindAddress = null
+let address = null
+let coords = null
 
 function init() {
     console.log('Inside init')
     currLat = document.getElementById('currLat')
     currLng = document.getElementById('currLng')
     circleRange = document.getElementById('circleRange')
-
+    btnFindAddress = document.getElementById('btnFindAddress')
+    btnFindAddress.addEventListener('click', findAddressByCoords)
+    address = document.getElementById('address')
 
     const lille = {
         lat: 50.6329700,
@@ -37,7 +42,7 @@ function init() {
         draggable: false
     }
 
-    const zoomLevel = 12
+    const zoomLevel = 15
 
     const map = L.map('mapid').setView([lille.lat, lille.lng], zoomLevel)
 
@@ -58,24 +63,20 @@ function init() {
     })
 
     mainLayer.addTo(map)
-
-    // L.esri.basemapLayer('Topographic').addTo(map);
-    // L.esri.basemapLayer('ImageryFirefly').addTo(map);
-    
-
 }
 
 function addMarker(options, map) {
     const marker = L.marker([options.lat, options.lng], { title: options.title, draggable: options.draggable })
     marker.addTo(map)
 
-    marker.on('dragend', function(event) {
+    marker.on('dragend', function (event) {
+        coords = event.target._latlng
         console.log('New coords: ', event.target._latlng)
         showNewCoords(event.target._latlng, event.target)
     })
 }
 
-function addCustomMarker(options, map)  {
+function addCustomMarker(options, map) {
     const smileyIcon = L.icon({
         iconUrl: './icons/oil-and-gas-well.png',
         iconSize: [32, 37],
@@ -95,7 +96,7 @@ function showNewCoords(coords, marker) {
 }
 
 function addCircle(options, map) {
-    const { color, fillColor, radius} = options.circle
+    const { color, fillColor, radius } = options.circle
     circle = L.circle([options.lat, options.lng], {
         color,
         fillColor,
@@ -104,6 +105,12 @@ function addCircle(options, map) {
     circle.addTo(map)
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    init();
-});
+function findAddressByCoords() {
+    const geocodeService = L.esri.Geocoding.geocodeService()
+    geocodeService.reverse().latlng(coords).run(function (error, result) {
+        if (error) {
+            return
+        }
+        console.log(result)
+    })
+}
