@@ -1,10 +1,13 @@
 let currLat = null
 let currLng = null
+let circleRange = null
+let circle = null
 
 function init() {
     console.log('Inside init')
     currLat = document.getElementById('currLat')
     currLng = document.getElementById('currLng')
+    circleRange = document.getElementById('circleRange')
 
 
     const lille = {
@@ -43,6 +46,11 @@ function init() {
     addCustomMarker(lilleIcone, map)
 
     addCircle(citadelleLille, map)
+
+    circleRange.addEventListener('change', (event) => {
+        console.log(event.target.value)
+        circle.setRadius(event.target.value * 10)
+    })
 
     const mainLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -88,7 +96,7 @@ function showNewCoords(coords, marker) {
 
 function addCircle(options, map) {
     const { color, fillColor, radius} = options.circle
-    const circle = L.circle([options.lat, options.lng], {
+    circle = L.circle([options.lat, options.lng], {
         color,
         fillColor,
         radius
