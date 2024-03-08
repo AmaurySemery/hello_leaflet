@@ -63,10 +63,11 @@ function addCustomMarker(options, map)  {
     const smileyIcon = L.icon({
         iconUrl: './icons/oil-and-gas-well.png',
         iconSize: [32, 37],
-        iconAnchor: [16, 18]
+        iconAnchor: [16, 18],
+        popupAnchor: [0, -30]
     })
     const marker = L.marker([options.lat, options.lng], { title: options.title, icon: smileyIcon })
-    marker.addTo(map)
+    marker.addTo(map).bindPopup('en voiture SVP')
 }
 
 function showNewCoords(coords, marker) {
