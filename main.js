@@ -70,6 +70,8 @@ function addMarker(options, map) {
     marker.addTo(map)
 
     marker.on('dragend', function (event) {
+        btnFindAddress.disabled = false
+        address.innerText = ''
         coords = event.target._latlng
         console.log('New coords: ', event.target._latlng)
         showNewCoords(event.target._latlng, event.target)
@@ -112,5 +114,6 @@ function findAddressByCoords() {
             return
         }
         console.log(result)
+        address.innerText = result.address.Match_addr
     })
 }
