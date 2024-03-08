@@ -87,10 +87,11 @@ function showNewCoords(coords, marker) {
 }
 
 function addCircle(options, map) {
+    const { color, fillColor, radius} = options.circle
     const circle = L.circle([options.lat, options.lng], {
-        color: options.circle.color,
-        fillColor: options.circle.fillColor,
-        radius: options.circle.radius
+        color,
+        fillColor,
+        radius
     })
     circle.addTo(map)
 }
