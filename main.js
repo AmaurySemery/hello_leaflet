@@ -18,7 +18,13 @@ function init() {
         lat: 50.6413572,
         lng: 3.0443862,
         title: 'Citadelle de Lille',
-        draggable: false
+        draggable: false,
+        circle: {
+            color: 'green',
+            fillColor: '#42f5B0',
+            fillOpacity: 0.5,
+            radius: 500
+        }
     }
 
     const lilleIcone = {
@@ -35,6 +41,8 @@ function init() {
     addMarker(lille, map)
     addMarker(citadelleLille, map)
     addCustomMarker(lilleIcone, map)
+
+    addCircle(citadelleLille, map)
 
     const mainLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -76,6 +84,15 @@ function showNewCoords(coords, marker) {
     marker
         .bindPopup(`<h3>Nouvelles coordonnées:</h3> <div>lat: ${coords.lat} | lng: ${coords.lng}</div>`)
         .openPopup()
+}
+
+function addCircle(options, map) {
+    const circle = L.circle([options.lat, options.lng], {
+        color: options.circle.color,
+        fillColor: options.circle.fillColor,
+        radius: options.circle.radius
+    })
+    circle.addTo(map)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
