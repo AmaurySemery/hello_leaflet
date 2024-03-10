@@ -46,6 +46,11 @@ function init() {
 
     const map = L.map('mapid').setView([lille.lat, lille.lng], zoomLevel)
 
+    map.on('click', function(event) {
+        console.log(event)
+        L.marker(event.latlng).addTo(map)
+    })
+
     addMarker(lille, map)
     addMarker(citadelleLille, map)
     addCustomMarker(lilleIcone, map)
