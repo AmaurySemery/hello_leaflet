@@ -5,6 +5,7 @@ let circle = null
 let btnFindAddress = null
 let address = null
 let coords = null
+let chkEnableMapClick = null
 
 function init() {
     console.log('Inside init')
@@ -14,6 +15,8 @@ function init() {
     btnFindAddress = document.getElementById('btnFindAddress')
     btnFindAddress.addEventListener('click', findAddressByCoords)
     address = document.getElementById('address')
+    chkEnableMapClick = document.getElementById('chkEnableMapClick')
+    chkEnableMapClick.addEventListener('change', toggleMapListening)
 
     const lille = {
         lat: 50.6329700,
@@ -44,12 +47,12 @@ function init() {
 
     const zoomLevel = 15
 
-    const map = L.map('mapid').setView([lille.lat, lille.lng], zoomLevel)
+    map = L.map('mapid').setView([lille.lat, lille.lng], zoomLevel)
 
-    map.on('click', function(event) {
-        console.log(event)
-        L.marker(event.latlng).addTo(map)
-    })
+    // map.on('click', function(event) {
+    //     console.log(event)
+    //     L.marker(event.latlng).addTo(map)
+    // })
 
     addMarker(lille, map)
     addMarker(citadelleLille, map)
@@ -120,5 +123,24 @@ function findAddressByCoords() {
         }
         console.log(result)
         address.innerText = result.address.Match_addr
+    })
+}
+
+function toggleMapListening(event) {
+    console.log('change', event.target.checked)
+    if (event.target.checked) {
+        map.on('click', toggleAddMarkerAndReverseGeocode)
+    } else {
+        map.off('click', toggleAddMarkerAndReverseGeocode)
+    }
+}
+
+function toggleAddMarkerAndReverseGeocode(event) {
+    const geocodeService = L.esri.Geocoding.geocodeService()
+    geocodeService.reverse().latlng(event.latlng).run(function(error, result) {
+        if (error) {
+            return
+        }
+        L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr)
     })
 }
